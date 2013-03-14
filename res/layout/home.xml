@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:gravity="center_horizontal"
+  android:layout_height="match_parent" android:background="@color/chev_base">
+    <include android:id="@+id/include1" layout="@layout/actionbar" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
+    <TableLayout android:id="@+id/tableLayout1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center">
+        <TableRow android:id="@+id/tableRow1"  android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <ImageButton android:layout_margin="10dp" android:layout_width="134dp" android:id="@+id/govisualize" android:layout_height="134dp" android:src="@drawable/sort400" android:background="@color/clear" android:text="Visualize"></ImageButton>
+            <ImageButton android:layout_margin="10dp" android:layout_width="134dp" android:id="@+id/goupload" android:layout_height="134dp" android:src="@drawable/upload400" android:background="@color/clear" android:text="Upload"></ImageButton>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow3" android:layout_marginBottom="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:gravity="center" android:text="Visualize" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView android:gravity="center" android:text="Upload" android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+        </TableRow>
+        <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <ImageButton android:layout_margin="10dp" android:layout_width="134dp" android:id="@+id/goconfigure" android:layout_height="134dp" android:src="@drawable/settings400" android:background="@color/clear" android:text="Settings"></ImageButton>
+            <ImageButton android:layout_margin="10dp" android:layout_width="134dp" android:id="@+id/gosyslogs" android:layout_height="134dp" android:src="@drawable/notificationx" android:background="@color/clear" android:text="System Logs"></ImageButton>
+            </TableRow>
+        <TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:gravity="center" android:text="Configure" android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <TextView android:gravity="center" android:text="System Logs" android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            </TableRow>
+    </TableLayout>
+    
+</LinearLayout>

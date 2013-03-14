@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, ProcessMonitorActivity!</string>
+    <string name="app_name">PhoneMonitor</string>
+    <string name="monitor_explanation">Configure how APPNAME logs your phone.</string>
+    <string name="upload_explanation">Upload information to APPNAME so that we can provide relevant analysis and suggestions to you.</string>
+    <string name="filter_explanation">Choose what to send to our service.</string>
+    <string name="systemlog_explanation">Copies over the system log from your phone.</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="chev_base">#F2EB88</color>
+    <color name="chev_farleft">#2F6571</color>
+    <color name="chev_left">#97638A</color>
+    <color name="chev_right">#D90B0B</color>
+    <color name="chev_farright">#592246</color>
+    <color name="light_text">#f0f0f0</color>
+    <color name="dark_text">#0f0f0f</color>
+    <color name="clear">#00000000</color>
+    <color name="chev_base2">#E5DF81</color>
+    <color name="chev_base3">#F4ED8C</color>
+    
+</resources>

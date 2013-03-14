@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_apps" android:layout_height="60dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_height="48dp" android:layout_width="48dp" android:src="@drawable/icon" android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="8dp" android:id="@+id/monitoricon"></ImageView>
+    <TextView android:id="@+id/monitorname" android:layout_marginLeft="10dp" android:textAppearance="?android:attr/textAppearanceMedium" android:text="Apps and Services" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_toRightOf="@+id/monitoricon"></TextView>
+    <CheckBox android:text="" android:id="@+id/monitoring" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignBaseline="@+id/monitorname" android:layout_alignBottom="@+id/monitorname" android:layout_alignParentRight="true"></CheckBox>
+</RelativeLayout>

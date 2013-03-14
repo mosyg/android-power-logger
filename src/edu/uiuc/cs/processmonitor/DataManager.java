@@ -1,0 +1,386 @@
+package edu.uiuc.cs.processmonitor;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.ActivityManager;
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+
+public class DataManager {
+	
+	public static String URL = "http://mosyg2.cs.uiuc.edu/android/app/scans/phoneMonitor/uploadEndpoint.php";
+
+	
+	public static String RECENT = "recent";
+	public static String FOREGROUND = "foreground";
+	public static String TIMESTAMP = "timestamp";
+	public static String KIND = "kind";
+
+	public final static String RUNNING_APPS = "runningapps.json";
+	public final static String PROCESSES = "processes.json";
+	public final static String WIFI = "wifi.json";
+	public final static String BLUETOOTH = "bluetooth.json";
+	public final static String GPS = "gps.json";
+	public final static String SOFT_EVENTS = "softevents.json";
+	public final static String BATTERY = "battery.json";
+	public final static String SYSTEM_EVENT_LOG = "systemevents.txt";
+	
+	public static File getDataFile() throws IOException {
+		return getDataFile(RUNNING_APPS);
+	}
+	
+	public static File getDataDir() {
+		File saveDir = new File( Environment.getExternalStorageDirectory(), "process_monitor");
+		saveDir.mkdirs();
+		return saveDir;
+	}
+	public static File getDataFile(String kind) throws IOException {
+		File saveDir = getDataDir();
+		
+		if (kind == null) kind = RUNNING_APPS;
+		File saveFile = new File(saveDir, kind);
+		if (!saveFile.exists()) saveFile.createNewFile();
+		return saveFile;
+	}
+	
+	
+	public static void appendJSONToFile(JSONObject object, File f) throws IOException {
+		FileWriter fout = new FileWriter(f, f.exists());
+		BufferedWriter out = new BufferedWriter(fout);
+		out.append(object.toString()+"\n");
+		out.flush();
+		out.close();
+	}
+	
+	public static void appendJSONToDefaultFile(JSONObject object, String type) throws IOException {
+		appendJSONToFile(object, getDataFile(type));
+	}
+	
+	public static JSONObject saveScan(Context context, JSONArray jsontasks, JSONArray jsonforeground) throws JSONException, IOException {
+		JSONObject object = new JSONObject();
+		object.put(RECENT, jsontasks);
+		object.put(FOREGROUND, jsonforeground);
+		object.put(KIND, RUNNING_APPS);
+		object.put(TIMESTAMP, System.currentTimeMillis());
+		appendJSONToDefaultFile(object, RUNNING_APPS);
+		//writeToUrl(URL, object);
+		return object;
+	}
+	
+	
+	public static JSONObject saveWifiScan(Context context, JSONObject wifiinfo) throws JSONException, IOException {
+		JSONObject object = new JSONObject();
+		object.put(RECENT, wifiinfo);
+		object.put(KIND, WIFI);
+		object.put(TIMESTAMP, System.currentTimeMillis());
+		appendJSONToDefaultFile(object, WIFI);
+		//writeToUrl(URL, object);
+		return object;
+	}
+	
+	public static JSONObject saveBluetoothScan(Context context, JSONObject bluetoothinfo) throws JSONException, IOException {
+		JSONObject object = new JSONObject();
+		object.put(RECENT, bluetoothinfo);
+		object.put(KIND, BLUETOOTH);
+		object.put(TIMESTAMP, System.currentTimeMillis());
+		appendJSONToDefaultFile(object, BLUETOOTH);
+		//writeToUrl(URL, object);
+		return object;
+	}
+	
+	public static JSONObject saveGPSScan(Context context, JSONObject bluetoothinfo) throws JSONException, IOException {
+		JSONObject object = new JSONObject();
+		object.put(RECENT, bluetoothinfo);
+		object.put(KIND, GPS);
+		object.put(TIMESTAMP, System.currentTimeMillis());
+		appendJSONToDefaultFile(object, GPS);
+		//writeToUrl(URL, object);
+		return object;
+	}
+	
+	public static JSONObject saveSoftEvent(Context context, JSONObject softevent) throws JSONException, IOException {
+		JSONObject object = new JSONObject();
+		object.put(RECENT, softevent);
+		object.put(KIND, SOFT_EVENTS);
+		object.put(TIMESTAMP, System.currentTimeMillis());
+		appendJSONToDefaultFile(object, SOFT_EVENTS);
+		//writeToUrl(URL, object);
+		return object;
+	}
+	
+	public static JSONObject saveBatteryEvent(Context context, JSONObject batteryevent) throws JSONException, IOException {
+		JSONObject object = new JSONObject();
+		object.put(RECENT, batteryevent);
+		object.put(KIND, BATTERY);
+		object.put(TIMESTAMP, System.currentTimeMillis());
+		appendJSONToDefaultFile(object, BATTERY);
+		//writeToUrl(URL, object);
+		return object;
+	}
+	
+	public static void dumpSystemLog() {
+		
+	}
+
+
+	
+	
+	/** legacy processesmonitor code **/
+	public static JSONObject processes_memInfoWrite(Context context){
+		ActivityManager a = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+	    ActivityManager.MemoryInfo mInfo = new ActivityManager.MemoryInfo();
+	    a.getMemoryInfo(mInfo);
+	    
+	    Map<String,Object> mp = new HashMap<String, Object>();
+		mp.put("timestamp", System.currentTimeMillis());
+		mp.put("available_memory", mInfo.availMem);
+		mp.put("low_memory", mInfo.lowMemory);
+		mp.put("threshold", mInfo.threshold);
+		JSONObject object = new JSONObject(mp);
+		return processes_write("overallMemory.json", object);
+	}
+	
+	public static JSONObject processes_write(String filename, JSONObject mp){
+		try {
+			mp.put(KIND, filename);
+			File output_file = new File(new File(Environment.getExternalStorageDirectory(),"process_monitor"),filename);
+			if (!output_file.exists()) output_file.createNewFile();
+			FileWriter f = new FileWriter(output_file, output_file.exists());
+		    f.append("" + mp + "\n");
+		    f.close();
+			//writeToUrl(URL, mp);
+		    return mp;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	
+	
+	
+	
+	public static AppHistory parseHistory(File file) throws Exception {
+		
+		
+		String[] packagelist = getPackageNames(file);
+		AppHistory history = makeHistory(file, packagelist);
+		return history;
+	}
+	
+	public static int count(File filename) throws IOException {
+	    InputStream is = new BufferedInputStream(new FileInputStream(filename));
+	    try {
+	        byte[] c = new byte[1024];
+	        int count = 0;
+	        int readChars = 0;
+	        while ((readChars = is.read(c)) != -1) {
+	            for (int i = 0; i < readChars; ++i) {
+	                if (c[i] == '\n')
+	                    ++count;
+	            }
+	        }
+	        return count;
+	    } finally {
+	        is.close();
+	    }
+	}
+
+	
+	
+	/**
+	 * Reads each line in, recording each package - done this way for memory constraint issues
+	 * @param jhistory
+	 * @return
+	 * @throws JSONException
+	 * @throws IOException 
+	 */
+	private static String[] getPackageNames(File f) throws JSONException, IOException {
+		HashSet<String> seenpackages = new HashSet<String>();
+		
+		FileReader fin = new FileReader(f);
+		BufferedReader in = new BufferedReader(fin);
+		String line = "";
+		line = in.readLine();
+		while ( line != null) {
+			JSONObject object = new JSONObject(line);
+			JSONArray recent = object.getJSONArray(RECENT);
+			for (int i=0; i<recent.length(); i++)  {
+				String s = recent.getString(i);
+				seenpackages.add(s);
+			}
+			JSONArray foreground = object.getJSONArray(FOREGROUND);
+			for (int i=0; i<foreground.length(); i++)  {
+				String s = foreground.getString(i);
+				seenpackages.add(s);
+			}
+			line = in.readLine();
+		}
+		return seenpackages.toArray(new String[seenpackages.size()]);
+	}
+	
+	
+	private static AppHistory makeHistory(File f, String[] packagelist) throws IOException, JSONException {
+		int length = count(f);
+		int numpackages = packagelist.length;
+		byte[] history = new byte[length * numpackages];
+		long[] timestamps = new long[length];
+		
+		FileReader fin = new FileReader(f);
+		BufferedReader in = new BufferedReader(fin);
+		HashMap<String, Integer> stringindexmap = new HashMap<String,Integer>();
+		for (int i=0; i<packagelist.length; i++) {
+			stringindexmap.put(packagelist[i], i);
+		}
+		
+		String line = "";
+		line = in.readLine();
+		int linecount=0;
+		while ( line != null && linecount < length) {			
+			JSONObject object = new JSONObject(line);
+			JSONArray recent = object.getJSONArray(RECENT);
+			for (int i=0; i<recent.length(); i++)  {
+				String s = recent.getString(i);
+				history[linecount*numpackages + stringindexmap.get(s)] = AppHistory.BACKGROUND;
+			}
+			JSONArray foreground = object.getJSONArray(FOREGROUND);
+			for (int i=0; i<foreground.length(); i++)  {
+				String s = foreground.getString(i);
+				history[linecount*numpackages + stringindexmap.get(s)] = AppHistory.FOREGROUND;
+			}
+			
+			timestamps[linecount] = object.getLong(TIMESTAMP);
+			
+			line = in.readLine();
+			linecount++;
+		}
+		
+		AppHistory hist = new AppHistory();
+		hist.packagenames = packagelist;
+		hist.history = history;
+		hist.timestamps = timestamps;
+		hist.packagemap = stringindexmap;
+		
+		return hist;
+		
+	}
+	
+	
+	
+	
+//	public static void writeToUrl(final String path, final JSONObject object) {
+//		new Runnable() {
+//			public void run() {
+//				writeToUrlUnthreaded(path, object);
+//			}
+//		};//.run();
+//	}
+//	public static void writeToUrlUnthreaded(String path, JSONObject object) {
+//	    HttpClient client = new DefaultHttpClient();
+//	    HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
+//	                                                                            // Limit
+//	    HttpResponse response;
+//	    try {
+//	        HttpPost post = new HttpPost(path);
+//	        String obj_str = object.toString(4);
+//	        Log.i("json Object", obj_str);
+//	        //post.setHeader("json", obj_str);
+//	        BasicHttpEntity entity = new BasicHttpEntity();
+//	        entity.setContent(new ByteArrayInputStream(obj_str.getBytes()));
+//	        post.setEntity(entity);
+//	        
+//        	Log.i("Send To Server", "Length of upload: "+obj_str.length());
+//	        StringEntity se = new StringEntity(obj_str);
+//	        se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+//	                "application/json"));
+//	        post.setEntity(se);
+//	        response = client.execute(post);
+//	        /* Checking response */
+//	        if (response != null) {
+//	            InputStream in = response.getEntity().getContent(); // Get the
+//	                                                                // data in
+//	                                                                    // the
+//	                                                                    // entity
+//	            String a = convertStreamToString(in);
+//	            for (String line : a.split("\n")) 
+//	            	Log.i("Read from Server", line);
+//	        }
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    }
+//	}
+//	
+//	private static String convertStreamToString(InputStream is) {
+//	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+//	    StringBuilder sb = new StringBuilder();
+//
+//	    String line = null;
+//	    try {
+//	        while ((line = reader.readLine()) != null) {
+//	            sb.append(line + "\n");
+//	        }
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            is.close();
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	    return sb.toString();
+//	}
+//	
+	
+	
+	
+//	private static void sendMultipart(String path, String string_data) {
+//        byte[] data = string_data.getBytes();
+//        HttpClient httpClient = new DefaultHttpClient();
+//        HttpPost postRequest = new HttpPost(path);
+//        File file= new File("/mnt/sdcard/enca/aha.mpeg");
+//        //FileBody bin = new FileBody(file);
+//        MultipartEntity reqEntity = new   MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+//        reqEntity.addPart("uploaded", bin);
+//        postRequest.setEntity(reqEntity);
+//        HttpResponse response = httpClient.execute(postRequest);
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+//        String sResponse;
+//        StringBuilder s = new StringBuilder();
+//
+//        while ((sResponse = reader.readLine()) != null) {
+//            s = s.append(sResponse);
+//        }
+//        System.out.println("Response: " + s);
+//
+//	}
+
+	
+}

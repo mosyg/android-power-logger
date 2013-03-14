@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView android:id="@+id/titletext" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/hello" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"></TextView>
+<Button android:id="@+id/starttbutton" android:text="Start" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
+<Button android:id="@+id/stoppbutton" android:text="Stop" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
+<Button android:id="@+id/vizbutton" android:text="Visualize" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
+</LinearLayout>

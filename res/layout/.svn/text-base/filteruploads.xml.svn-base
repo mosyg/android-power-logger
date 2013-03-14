@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:gravity="center_horizontal"
+  android:layout_height="match_parent" android:background="@color/chev_base" android:orientation="vertical">
+    <include android:id="@+id/include1" layout="@layout/actionbar" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
+    <TextView android:padding="3dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/textView2" android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/filter_explanation" android:background="@color/chev_left" android:textColor="@color/light_text" android:textSize="12dp"></TextView>
+    <ScrollView android:layout_width="match_parent" android:id="@+id/scrollView1" android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical" android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="match_parent">
+			<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_apps" android:layout_height="60dp" xmlns:android="http://schemas.android.com/apk/res/android">
+			    <ImageView android:padding="5dp" android:layout_height="48dp" android:layout_width="48dp" android:src="@drawable/appsx" android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="8dp" android:id="@+id/monitoricon"></ImageView>
+			    <TextView android:id="@+id/monitorname" android:layout_marginLeft="10dp" android:textAppearance="?android:attr/textAppearanceMedium" android:text="Apps and Services" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_toRightOf="@+id/monitoricon"></TextView>
+			</RelativeLayout>        
+			<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingLeft="20dp" android:background="@color/chev_base2">
+				<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_foregroundapps" android:layout_height="60dp" android:layout_margin="5dp">
+					<TextView android:layout_alignLeft="@+id/monitorname" android:layout_toLeftOf="@+id/monitoring" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_below="@+id/monitorname" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="The app that you're currently using" android:layout_alignParentBottom="true" android:textSize="12dp"></TextView>
+					<TextView android:layout_height="wrap_content" android:id="@+id/monitorname" android:layout_marginLeft="5dp" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_toRightOf="@+id/monitoricon" android:layout_width="wrap_content" android:text="Foreground Apps" android:layout_alignTop="@+id/monitoricon"></TextView>
+					<ImageView android:padding="5dp" android:src="@drawable/homex" android:layout_height="48dp" android:layout_width="48dp" android:id="@+id/monitoricon" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+				</RelativeLayout>        
+				<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_appsservices" android:layout_height="60dp" android:layout_margin="5dp">
+					<TextView android:layout_alignLeft="@+id/monitorname" android:layout_toLeftOf="@+id/monitoring" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_below="@+id/monitorname" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="All apps and services, foreground or background" android:layout_alignParentBottom="true" android:textSize="12dp"></TextView>
+					<TextView android:layout_height="wrap_content" android:id="@+id/monitorname" android:layout_marginLeft="5dp" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_toRightOf="@+id/monitoricon" android:layout_width="wrap_content" android:text="All Apps &amp; Services" android:layout_alignTop="@+id/monitoricon"></TextView>
+					<ImageView android:padding="5dp" android:src="@drawable/refreshx" android:layout_height="48dp" android:layout_width="48dp" android:id="@+id/monitoricon" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+				</RelativeLayout>        
+				<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_appevents" android:layout_height="60dp" android:layout_margin="5dp">
+					<TextView android:layout_alignLeft="@+id/monitorname" android:layout_toLeftOf="@+id/monitoring" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_below="@+id/monitorname" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="App-generated events, such as Alarms, Messages" android:layout_alignParentBottom="true" android:textSize="12dp"></TextView>
+					<TextView android:layout_height="wrap_content" android:id="@+id/monitorname" android:layout_marginLeft="5dp" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_toRightOf="@+id/monitoricon" android:layout_width="wrap_content" android:text="App Events" android:layout_alignTop="@+id/monitoricon"></TextView>
+					<ImageView android:padding="5dp" android:src="@drawable/notificationx" android:layout_height="48dp" android:layout_width="48dp" android:id="@+id/monitoricon" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+				</RelativeLayout>        
+			</LinearLayout>     
+			<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_location" android:layout_height="60dp" xmlns:android="http://schemas.android.com/apk/res/android">
+			    <ImageView android:padding="5dp" android:layout_height="48dp" android:layout_width="48dp" android:src="@drawable/locationx" android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="8dp" android:id="@+id/monitoricon"></ImageView>
+			    <TextView android:id="@+id/monitorname" android:layout_marginLeft="10dp" android:textAppearance="?android:attr/textAppearanceMedium" android:text="Location" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_toRightOf="@+id/monitoricon"></TextView>
+			</RelativeLayout>        
+			<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingLeft="20dp" android:background="@color/chev_base2">
+				<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_wifi" android:layout_height="60dp" android:layout_margin="5dp">
+					<TextView android:layout_alignLeft="@+id/monitorname" android:layout_toLeftOf="@+id/monitoring" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_below="@+id/monitorname" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="Your current network, as well as scans" android:layout_alignParentBottom="true" android:textSize="12dp"></TextView>
+					<TextView android:layout_height="wrap_content" android:id="@+id/monitorname" android:layout_marginLeft="5dp" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_toRightOf="@+id/monitoricon" android:layout_width="wrap_content" android:text="Wifi" android:layout_alignTop="@+id/monitoricon"></TextView>
+					<ImageView android:padding="5dp" android:src="@drawable/wifix" android:layout_height="48dp" android:layout_width="48dp" android:id="@+id/monitoricon" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+				</RelativeLayout>        
+				<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_bluetooth" android:layout_height="60dp" android:layout_margin="5dp">
+					<TextView android:layout_alignLeft="@+id/monitorname" android:layout_toLeftOf="@+id/monitoring" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_below="@+id/monitorname" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="Scans for bluetooth devices around you" android:layout_alignParentBottom="true" android:textSize="12dp"></TextView>
+					<TextView android:layout_height="wrap_content" android:id="@+id/monitorname" android:layout_marginLeft="5dp" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_toRightOf="@+id/monitoricon" android:layout_width="wrap_content" android:text="Bluetooth" android:layout_alignTop="@+id/monitoricon"></TextView>
+					<ImageView android:padding="5dp" android:src="@drawable/bluetoothx" android:layout_height="48dp" android:layout_width="48dp" android:id="@+id/monitoricon" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+				</RelativeLayout>        
+				<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_gps" android:layout_height="60dp" android:layout_margin="5dp">
+					<TextView android:layout_alignLeft="@+id/monitorname" android:layout_toLeftOf="@+id/monitoring" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_below="@+id/monitorname" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="GPS location ()" android:layout_alignParentBottom="true" android:textSize="12dp"></TextView>
+					<TextView android:layout_height="wrap_content" android:id="@+id/monitorname" android:layout_marginLeft="5dp" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_toRightOf="@+id/monitoricon" android:layout_width="wrap_content" android:text="GPS" android:layout_alignTop="@+id/monitoricon"></TextView>
+					<ImageView android:padding="5dp" android:src="@drawable/gpsx" android:layout_height="48dp" android:layout_width="48dp" android:id="@+id/monitoricon" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+				</RelativeLayout>        
+			</LinearLayout>     
+        
+        </LinearLayout>
+    </ScrollView>
+
+    
+    
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">Scan interval</string>
+    <string-array name="scantimes_text_array">
+        <item>5 minutes</item>
+        <item>2 minutes</item>
+        <item>1 minute</item>
+        <item>30 seconds</item>
+        <item>10 seconds</item>
+    </string-array>
+	<integer-array name="scantimes_integer_array">
+	    <item>300</item>
+        <item>120</item>
+        <item>60</item>
+        <item>30</item>
+        <item>10</item>
+	</integer-array>
+</resources>

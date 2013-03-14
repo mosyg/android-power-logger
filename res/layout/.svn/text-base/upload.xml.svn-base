@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:gravity="center_horizontal"
+  android:layout_height="match_parent" android:background="@color/chev_base" android:orientation="vertical">
+    <include android:id="@+id/include1" layout="@layout/actionbar" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
+    <TextView android:padding="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textView2" android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/upload_explanation" android:background="@color/chev_left" android:textColor="@color/light_text" android:textSize="12dp"></TextView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:gravity="center_vertical" android:background="@color/chev_left">
+        <TextView android:text="Automatic Upload:" android:layout_width="91dp" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:id="@+id/textView1" android:lines="2" android:textColor="@color/light_text"></TextView>
+        <Spinner android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/selectupload"></Spinner>
+        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Upload Now" android:id="@+id/uploadnow"></Button>
+    </LinearLayout>
+    <ScrollView android:layout_width="match_parent" android:id="@+id/scrollView1" android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical" android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="match_parent">
+			<RelativeLayout android:layout_width="match_parent" android:id="@+id/monitor_apps" android:layout_height="60dp" xmlns:android="http://schemas.android.com/apk/res/android">
+			    <ImageView android:padding="5dp" android:layout_height="48dp" android:layout_width="48dp" android:src="@drawable/appsx" android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="8dp" android:id="@+id/monitoricon"></ImageView>
+			    <TextView android:id="@+id/monitorname" android:layout_marginLeft="10dp" android:textAppearance="?android:attr/textAppearanceMedium" android:text="Filter" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_toRightOf="@+id/monitoricon"></TextView>
+			</RelativeLayout>        
+        </LinearLayout>
+    </ScrollView>
+
+    
+    
+</LinearLayout>
